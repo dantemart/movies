@@ -1,0 +1,40 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"><strong>List movies</strong></h5>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">ID</th>
+                    <th scope="col" class="d-flex flex-column align-items-center">
+                        <span>Year</span>
+                        <input [(ngModel)]="movieService.searchYear" class="w-100 mt-1" type="number" min="1980"
+                            max="2023" step="1" value="" minlength="4" placeholder="Filter by year" />
+                    </th>
+                    <th scope="col" class="text-center">Title</th>
+                    <th scope="col" class="d-flex flex-column align-items-center">
+                        Winner?
+                        <select [(ngModel)]="movieService.searchWinner" name="winner" id="winner" class="w-100 mt-1">
+                            <option [ngValue]="true">Yes</option>
+                            <option [ngValue]="false">No</option>
+                            <option [ngValue]="''">Yes/No</option>
+                        </select>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let movie of movies$ | async">
+                    <th scope="row">{{ movie.id }}</th>
+                    <td>{{ movie.year }}</td>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.winner == true ? 'Yes' : 'No'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center overflow-auto">
+            <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="movieService.page"
+                [pageSize]="movieService.pageSize" [ellipses]="true"
+                [boundaryLinks]="true">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>
